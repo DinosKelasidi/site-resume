@@ -1,0 +1,728 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dinos — Frontend Developer</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Manrope:wght@300;400;500;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      :root {
+        --bg: #ffffff;
+        --bg2: #f7f7f5;
+        --bg3: #f0efea;
+        --text: #1a1a18;
+        --text2: #6b6b67;
+        --text3: #9e9e9a;
+        --border: rgba(0, 0, 0, 0.1);
+        --border2: rgba(0, 0, 0, 0.18);
+        --border3: rgba(0, 0, 0, 0.06);
+        --radius: 12px;
+        --radius-sm: 8px;
+      }
+
+      html {
+        scroll-behavior: smooth;
+      }
+
+      body {
+        font-family: "Manrope", sans-serif;
+        background: var(--bg3);
+        color: var(--text);
+        min-height: 100vh;
+        padding: 2rem 1rem;
+        line-height: 1.6;
+      }
+
+      .page {
+        max-width: 760px;
+        margin: 0 auto;
+      }
+
+      /* HEADER */
+      .header {
+        background: var(--bg);
+        border: 1.5px solid var(--border2);
+        border-radius: var(--radius);
+        padding: 2.5rem 2.5rem 2rem;
+        position: relative;
+        overflow: hidden;
+        margin-bottom: 1.25rem;
+      }
+
+      .header::before {
+        content: "</>";
+        position: absolute;
+        right: 2rem;
+        top: 50%;
+        transform: translateY(-50%);
+        font-family: "Space Mono", monospace;
+        font-size: 96px;
+        color: rgba(0, 0, 0, 0.04);
+        line-height: 1;
+        pointer-events: none;
+        user-select: none;
+        font-weight: 700;
+      }
+
+      .tag-line {
+        font-family: "Space Mono", monospace;
+        font-size: 11px;
+        letter-spacing: 0.14em;
+        color: var(--text3);
+        text-transform: uppercase;
+        margin-bottom: 0.5rem;
+      }
+
+      .name {
+        font-size: 48px;
+        font-weight: 800;
+        letter-spacing: -0.03em;
+        line-height: 1;
+        margin-bottom: 0.4rem;
+      }
+
+      .role {
+        font-family: "Space Mono", monospace;
+        font-size: 13px;
+        color: var(--text2);
+        margin-bottom: 1.5rem;
+      }
+
+      .contacts {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+      }
+
+      .pill {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        font-family: "Space Mono", monospace;
+        font-size: 11.5px;
+        padding: 5px 12px;
+        border-radius: 999px;
+        border: 0.5px solid var(--border2);
+        color: var(--text2);
+        background: var(--bg2);
+        text-decoration: none;
+        transition:
+          border-color 0.2s,
+          color 0.2s;
+      }
+      .pill:hover {
+        border-color: var(--text);
+        color: var(--text);
+      }
+      .pill svg {
+        width: 13px;
+        height: 13px;
+        flex-shrink: 0;
+      }
+
+      /* GRID */
+      .grid-2 {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 1.25rem;
+        margin-bottom: 1.25rem;
+      }
+      .grid-2 .full {
+        grid-column: 1 / -1;
+      }
+
+      /* CARD */
+      .card {
+        background: var(--bg);
+        border: 0.5px solid var(--border);
+        border-radius: var(--radius);
+        padding: 1.5rem 1.5rem 1.25rem;
+      }
+
+      .section-label {
+        font-family: "Space Mono", monospace;
+        font-size: 10px;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+        color: var(--text3);
+        margin-bottom: 1rem;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+      .section-label::after {
+        content: "";
+        flex: 1;
+        height: 0.5px;
+        background: var(--border);
+      }
+
+      /* ABOUT */
+      .about-text {
+        font-size: 13.5px;
+        line-height: 1.8;
+        color: var(--text2);
+      }
+
+      /* SKILLS */
+      .skill-grid {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 7px;
+      }
+
+      .skill-tag {
+        font-family: "Space Mono", monospace;
+        font-size: 11px;
+        padding: 5px 11px;
+        border-radius: var(--radius-sm);
+        border: 0.5px solid var(--border2);
+        color: var(--text);
+        background: var(--bg);
+      }
+
+      .skill-tag.core {
+        background: var(--text);
+        color: var(--bg);
+        border-color: var(--text);
+        font-weight: 700;
+      }
+
+      /* HIGHLIGHT LIST */
+      .highlight-list {
+        display: flex;
+        flex-direction: column;
+      }
+
+      .hl-row {
+        display: flex;
+        align-items: flex-start;
+        gap: 10px;
+        font-size: 12.5px;
+        color: var(--text2);
+        line-height: 1.55;
+        padding: 8px 0;
+        border-bottom: 0.5px solid var(--border3);
+      }
+      .hl-row:last-child {
+        border-bottom: none;
+        padding-bottom: 0;
+      }
+      .hl-icon {
+        width: 16px;
+        height: 16px;
+        flex-shrink: 0;
+        margin-top: 1px;
+        opacity: 0.45;
+      }
+
+      /* WEEKS */
+      .week-list {
+        display: flex;
+        flex-direction: column;
+        gap: 14px;
+      }
+
+      .week-row {
+        display: flex;
+        align-items: flex-start;
+        gap: 12px;
+      }
+
+      .week-dot {
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        border: 1.5px solid var(--border2);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-family: "Space Mono", monospace;
+        font-size: 9px;
+        font-weight: 700;
+        flex-shrink: 0;
+        color: var(--text2);
+        background: var(--bg);
+        margin-top: 1px;
+      }
+
+      .week-dot.perfect {
+        background: var(--text);
+        color: var(--bg);
+        border-color: var(--text);
+      }
+
+      .week-title {
+        font-size: 13px;
+        font-weight: 700;
+        margin-bottom: 3px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+
+      .score-badge {
+        font-family: "Space Mono", monospace;
+        font-size: 10px;
+        padding: 2px 7px;
+        border-radius: 4px;
+        border: 0.5px solid var(--border2);
+        color: var(--text3);
+        font-weight: 400;
+      }
+
+      .score-badge.top {
+        border-color: var(--text);
+        color: var(--text);
+        font-weight: 700;
+      }
+
+      .week-desc {
+        font-size: 12px;
+        color: var(--text2);
+        line-height: 1.5;
+      }
+
+      /* PROJECTS */
+      .project-list {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+      }
+
+      .project-row {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 12px 14px;
+        border: 0.5px solid var(--border);
+        border-radius: var(--radius-sm);
+        cursor: pointer;
+        transition:
+          border-color 0.2s,
+          transform 0.15s;
+        text-decoration: none;
+        color: inherit;
+      }
+      .project-row:hover {
+        border-color: var(--text);
+        transform: translateY(-1px);
+      }
+
+      .project-icon {
+        width: 36px;
+        height: 36px;
+        border-radius: 9px;
+        background: var(--bg2);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+      }
+      .project-icon svg {
+        width: 18px;
+        height: 18px;
+        opacity: 0.55;
+      }
+
+      .project-name {
+        font-size: 13px;
+        font-weight: 700;
+        margin-bottom: 2px;
+      }
+      .project-desc {
+        font-size: 11.5px;
+        color: var(--text2);
+      }
+
+      .project-tags {
+        display: flex;
+        gap: 5px;
+        flex-wrap: wrap;
+        margin-top: 5px;
+      }
+
+      .mini-tag {
+        font-family: "Space Mono", monospace;
+        font-size: 10px;
+        padding: 2px 7px;
+        border-radius: 4px;
+        border: 0.5px solid var(--border);
+        color: var(--text3);
+      }
+
+      .arrow-icon {
+        margin-left: auto;
+        flex-shrink: 0;
+        opacity: 0.3;
+        width: 16px;
+        height: 16px;
+      }
+
+      /* FOOTER */
+      .footer-note {
+        text-align: center;
+        font-family: "Space Mono", monospace;
+        font-size: 10px;
+        color: var(--text3);
+        letter-spacing: 0.08em;
+        padding-top: 0.5rem;
+      }
+
+      @media (max-width: 600px) {
+        body {
+          padding: 1rem 0.75rem;
+        }
+        .header {
+          padding: 1.75rem 1.5rem 1.5rem;
+        }
+        .name {
+          font-size: 36px;
+        }
+        .header::before {
+          font-size: 64px;
+        }
+        .grid-2 {
+          grid-template-columns: 1fr;
+        }
+        .grid-2 .full {
+          grid-column: 1;
+        }
+      }
+
+      @media print {
+        body {
+          background: white;
+          padding: 0;
+        }
+        .page {
+          max-width: 100%;
+        }
+        .project-row {
+          break-inside: avoid;
+        }
+        .card {
+          break-inside: avoid;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="page">
+      <!-- HEADER -->
+      <div class="header">
+        <p class="tag-line">frontend developer</p>
+        <p class="tag-line">22 года // 2004</p>
+        <p class="tag-line">Опыт 1 год</p>
+        <a href="tel:+79283504329" class="tag-line">+7 928 350-43-29</a>
+        <h1 class="name">Келасиди Динос Георгиевич</h1>
+        <p class="role">
+          // HTML&nbsp;·&nbsp;CSS&nbsp;·&nbsp;SCSS&nbsp;·&nbsp;JS // Pixel
+          Perfect &nbsp;·&nbsp; BEM
+        </p>
+        <div class="contacts">
+          <a
+            href="https://github.com/DinosKelasidi"
+            class="pill"
+            target="_blank"
+          >
+            <svg viewBox="0 0 24 24" fill="currentColor">
+              <path
+                d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"
+              />
+            </svg>
+            github.com/dinos
+          </a>
+          <a href="mailto:boss.dinos@mail.ru" class="pill">
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <rect x="2" y="4" width="20" height="16" rx="2" />
+              <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" />
+            </svg>
+            boss.dinos@mail.ru
+          </a>
+          <a
+            href="https://web.telegram.org/a/#1081569697"
+            class="pill"
+            target="_blank"
+          >
+            <svg viewBox="0 0 24 24" fill="currentColor">
+              <path
+                d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.562 8.248-1.97 9.289c-.145.658-.537.818-1.084.508l-3-2.21-1.447 1.394c-.16.16-.295.295-.605.295l.213-3.053 5.56-5.023c.242-.213-.054-.333-.373-.12l-6.871 4.326-2.962-.924c-.643-.204-.657-.643.136-.953l11.57-4.461c.537-.194 1.006.131.833.932z"
+              />
+            </svg>
+            @dinos
+          </a>
+        </div>
+      </div>
+
+      <!-- ROW 1: ABOUT (full width) -->
+      <div class="grid-2">
+        <div class="card full">
+          <p class="section-label">сопроводительное письмо</p>
+          <p class="about-text">
+            Frontend - developer, верстальщик лендингов. Много работал с
+            лендингами с фокусом на чистый читаемый код и точное воплощение
+            дизайна. Работал на фрилансе более полугода. Брал работы разной
+            сложности(от desktop - first верстки до адаптивной верстки под
+            мобильные устройства). Специализируюсь на верстке сложных макетов с
+            плотной работой в Figma и Pixel Perfect. Также работал с BEM -
+            методологией, семантикой. Сложными hover / focus - состояниями.
+            Настраивал полностью на проектах ESLint / Prettier / SCSS для
+            следующих разработчиков и поддержания проектов в чистоте и улучшения
+            их в будущем. Делались сайты с важными фичами(burger - menu, сложный
+            многошаговый Stepper, Grid - адаптация, Flex - адаптация).
+            Оптимизировал сайты под все breakpoints, учитывал все мертвые зоны.
+            Большинство сайтов сделано с подходом mobile - first.
+          </p>
+        </div>
+
+        <!-- SKILLS -->
+        <div class="card">
+          <p class="section-label">стек</p>
+          <div class="skill-grid">
+            <span class="skill-tag core">HTML5</span>
+            <span class="skill-tag core">CSS3</span>
+            <span class="skill-tag core">SCSS</span>
+            <span class="skill-tag core">JS</span>
+            <span class="skill-tag core">BEM</span>
+            <span class="skill-tag">Figma</span>
+            <span class="skill-tag">Pixel Perfect</span>
+            <span class="skill-tag">Flexbox</span>
+            <span class="skill-tag">CSS Grid</span>
+            <span class="skill-tag">Responsive, Liquid, Fixed</span>
+            <span class="skill-tag">Desktop-first</span>
+            <span class="skill-tag">Mobile-first</span>
+            <span class="skill-tag">ESLint</span>
+            <span class="skill-tag">Prettier</span>
+            <span class="skill-tag">Git</span>
+          </div>
+        </div>
+
+        <!-- WHAT I DO -->
+        <div class="card">
+          <p class="section-label">что умею</p>
+          <div class="highlight-list">
+            <div class="hl-row">
+              <svg
+                class="hl-icon"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+              >
+                <rect x="3" y="3" width="18" height="18" rx="2" />
+                <path d="M3 9h18M9 21V9" />
+              </svg>
+              Pixel Perfect вёрстка с детальной точностью по макетам Figma
+            </div>
+            <div class="hl-row">
+              <svg
+                class="hl-icon"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+              >
+                <rect x="5" y="2" width="14" height="20" rx="2" />
+                <path d="M12 18h.01" />
+              </svg>
+              Адаптивная, резиновая вёрстка под 4 брейкпоинта (1920 → 375px)
+            </div>
+            <div class="hl-row">
+              <svg
+                class="hl-icon"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+              >
+                <path d="M12 2L2 7l10 5 10-5-10-5z" />
+                <path d="M2 17l10 5 10-5" />
+                <path d="M2 12l10 5 10-5" />
+              </svg>
+              SCSS-архитектура: переменные, миксины, компоненты
+            </div>
+            <div class="hl-row">
+              <svg
+                class="hl-icon"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+              >
+                <polyline points="16 18 22 12 16 6" />
+                <polyline points="8 6 2 12 8 18" />
+              </svg>
+              Семантический HTML5 без лишних div
+            </div>
+            <div class="hl-row">
+              <svg
+                class="hl-icon"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+              >
+                <path d="M15 15l6 6m-11-4a7 7 0 110-14 7 7 0 010 14z" />
+              </svg>
+              Hover / focus состояния, интерактивность (аккордеон, слайдер)
+            </div>
+            <div class="hl-row">
+              <svg
+                class="hl-icon"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+              >
+                <path
+                  d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"
+                />
+                <polyline points="14 2 14 8 20 8" />
+              </svg>
+              Чистый код: ESLint + Prettier, BEM-нейминг
+            </div>
+          </div>
+        </div>
+
+        <!-- PROJECTS -->
+        <div class="card full">
+          <p class="section-label">проекты внутри github</p>
+          <div class="project-list">
+            <a
+              href="https://github.com/DinosKelasidi/project-pixel-perfect"
+              class="project-row"
+            >
+              <div class="project-icon">
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                >
+                  <rect x="3" y="3" width="18" height="18" rx="2" />
+                  <path d="M3 9h18M9 21V9" />
+                </svg>
+              </div>
+              <div>
+                <p class="project-name">Pixel Perfect Layout</p>
+                <p class="project-desc">
+                  Вёрстка лендинга строго по макету с отклонением менее 2px
+                </p>
+                <div class="project-tags">
+                  <span class="mini-tag">HTML5</span>
+                  <span class="mini-tag">CSS</span>
+                  <span class="mini-tag">BEM</span>
+                  <span class="mini-tag">Pixel Perfect</span>
+                </div>
+              </div>
+              <svg
+                class="arrow-icon"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+              >
+                <path d="M5 12h14M12 5l7 7-7 7" />
+              </svg>
+            </a>
+            <a
+              href="https://github.com/DinosKelasidi/project-bank-rezume"
+              class="project-row"
+            >
+              <div class="project-icon">
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                >
+                  <rect x="2" y="3" width="20" height="14" rx="2" />
+                  <path d="M8 21h8M12 17v4" />
+                </svg>
+              </div>
+              <div>
+                <p class="project-name">Adaptive Site</p>
+                <p class="project-desc">
+                  Desktop-first сайт с поддержкой 3 брейкпоинтов, адаптивный
+                  flex
+                </p>
+                <div class="project-tags">
+                  <span class="mini-tag">Responsive</span>
+                  <span class="mini-tag">Desktop-first</span>
+                  <span class="mini-tag">SCSS</span>
+                  <span class="mini-tag">Media queries</span>
+                  <span class="mini-tag">Figma</span>
+                </div>
+              </div>
+              <svg
+                class="arrow-icon"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+              >
+                <path d="M5 12h14M12 5l7 7-7 7" />
+              </svg>
+            </a>
+            <a
+              href="https://github.com/DinosKelasidi/interactive-project-site"
+              class="project-row"
+            >
+              <div class="project-icon">
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                >
+                  <path d="M13 10V3L4 14h7v7l9-11h-7z" />
+                </svg>
+              </div>
+              <div>
+                <p class="project-name">Interactive Page</p>
+                <p class="project-desc">
+                  Сайт с интерактивными компонентами на нативном JavaScript
+                </p>
+                <div class="project-tags">
+                  <span class="mini-tag">Аккордеон</span>
+                  <span class="mini-tag">Слайдер</span>
+                  <span class="mini-tag">JS</span>
+                  <span class="mini-tag">DOM API</span>
+                </div>
+              </div>
+              <svg
+                class="arrow-icon"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+              >
+                <path d="M5 12h14M12 5l7 7-7 7" />
+              </svg>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <p class="footer-note">dinos · frontend developer · 2026</p>
+    </div>
+  </body>
+</html>
