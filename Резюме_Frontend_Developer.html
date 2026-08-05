@@ -1,0 +1,870 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dinos — Frontend Developer</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Manrope:wght@300;400;500;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      :root {
+        --bg: #ffffff;
+        --bg2: #f7f7f5;
+        --bg3: #f0efea;
+        --text: #1a1a18;
+        --text2: #6b6b67;
+        --text3: #9e9e9a;
+        --border: rgba(0, 0, 0, 0.1);
+        --border2: rgba(0, 0, 0, 0.18);
+        --border3: rgba(0, 0, 0, 0.06);
+        --radius: 12px;
+        --radius-sm: 8px;
+      }
+
+      html {
+        scroll-behavior: smooth;
+      }
+
+      body {
+        font-family: "Manrope", sans-serif;
+        background: var(--bg3);
+        color: var(--text);
+        min-height: 100vh;
+        padding: 2rem 1rem;
+        line-height: 1.6;
+      }
+
+      .page {
+        max-width: 760px;
+        margin: 0 auto;
+      }
+
+      /* HEADER */
+      .header {
+        background: var(--bg);
+        border: 1.5px solid var(--border2);
+        border-radius: var(--radius);
+        padding: 2.5rem 2.5rem 2rem;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 1.75rem;
+        margin-bottom: 1.25rem;
+      }
+
+      .header-text {
+        flex: 1 1 auto;
+        min-width: 0;
+      }
+
+      .header-photo {
+        flex: 0 0 auto;
+        width: 180px;
+        height: 236px;
+        border-radius: var(--radius-sm);
+        overflow: hidden;
+        background-image: url("data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAMCAgICAgMCAgIDAwMDBAYEBAQEBAgGBgUGCQgKCgkICQkKDA8MCgsOCwkJDRENDg8QEBEQCgwSExIQEw8QEBD/2wBDAQMDAwQDBAgEBAgQCwkLEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBD/wAARCACWAGwDASIAAhEBAxEB/8QAHQAAAQQDAQEAAAAAAAAAAAAABgQFBwgAAgMBCf/EADwQAAEDAwMCBAMGBAYBBQAAAAECAwQABREGEiExQQcTUWEiMnEIFEKBkaEjUmKxFSSCkqLRwRYXJVNy/8QAGgEAAwEBAQEAAAAAAAAAAAAAAwQFAgEGAP/EACURAAICAgMAAgICAwAAAAAAAAECAAMEERIhMRNBBVEiMjNCUv/aAAwDAQACEQMRAD8AvoFH+YYNaKIPJ4rwqA5FNWptTWPRtgm6o1NPTCtlvb8151XJ9kpHVSieAB1NXT1IGifI77dxyDwASTnAAHU/SoG8VvtfeHuhQ9a9IbNUXhOU5aWUQWl/1PDlzB7N5H9Qqs3jZ9rnX3iM+9ZNOzpOndNvp8sw4hBckJ6HznQNyge6QQkdMHrUHyGnkp8xMpp54/MVneEn0FLtZ/zGqqPt5LXiN9qvxb1yy/bp+r1W6C8C25DtDYisqHooglxf5qwaiD73KWS58L3dRWcKP981xdhhiN97luISSM4bbAJOPftTUJgByhsg44OME89eKEf5exkAJ0IXxXl7QkqkNgYJKJJQAP71uJdwj734VzfUhJySt/cAOvemGHNfSG9yHVhw5DW35h7+1OaF3BlnYYrIaX8RRu3H9qxoQgO4X2rxu8SmW2Lbbtb3uMmIQqOwzPcQ2P8A8gHb+XSpj8Nftp650xNat/iLGOpbW78yxtZuEbtlJ+V0D+VWD6KqrkyGWHRKhNLSlJCtqhgA90+3tTyzHReY6IjTwaeb3EJX1J9iPSuglfDMFFboifUzReutLeIlha1LpC6CZCdOxQKSh1lzu24g8oV7Hr1BIp+zjHPWvl/4ZeLOvfCG9mdYbkUo3JblxlJ3syUA5wtJ69fYjsav/wCEvjPpHxes7cyzSW49zS3vlWxbgLrRHVSP50f1Dp3waaRw3sTspKd/UP1EZz6VzUpYPwpyK2SeTgZHvWpVjjNEEAZ2kyY0OO9MmyWo8aO2p5995YQ202kZUtSjwEgAkmqC/aY8dV+JuolWawvq/wDT1vJRDSsEJeIBBkKTjOVDpnonA9asZ9r/AFWLF4S/4I1LDb1/ntMONg/G5Fby44MfylQaB+uK+ecu8+bPckHK1nKlKPU+36UGxtnjGKU/2M8kXRxlnymJqgAM5DeEp+gNN67vHbSPKjuK2j4d2Mn3IrnLkomvl1R2JPY/hrrBt0eSh1XnDcUhpCT3JPGKGdCNgkzd64EspjPtqcffPKUr+RJ6ClT1tgwlMsKUgbcF8rVyVY6D2/vTSmKzFOFS0B8EgJSMnI75HSni229T7iVzrc662lPCnVKBA9cDn+1DJmgP3O8t1DqFrgxHXBkJHkoIzgDgqPbpwBWR7i6y0Wlx1tEjhtKdoT6qyR1rqm+JLxjW9htIBGUJTkk/Q0um2zMUO3JZjlQyEA8nPtWdzepw8pt6AH0Rku4V8Y3nePQ5rk2I58x1bvlOsHAeSk4CsjhYHb+odK6QjKgOIXGkeaknGFgp4+lKnXLdHcXLkuYdUnASMbTng7h9K7ud1FbUZm+Nl7b93nISA8g/K+kd0npn07GlWn5190heI93sEtyHJgLTLjlte15sg/On1x0UO4JB603Rbql2J5FsQlltpXwFKPiJ7DJ6UvuYclWxj72otvlCnmHgMKynj8weQa5sz7W+p9AvBTxgtvi5pv74PJjXuEEi4w0EgDPCXkA/gUc8fhVkHtmQSQDhSEk1Qf7IerZ0Txgs9tG5P38vwn0g/CttbSjg/RSEq/01fcN7hlSiT3p2tuQ7ku+sI3UpJ9rzVa7v4rT7KteY1liRreyP5XCgOuED3U5j/TVUZHmpeUrJyFEHHbHerL/a5tS4XjXqF5pRSmXHiTBzwCthAJ/VJquVwPmFD6UAr5CyBg5H96Bv2NINKBELQU8+EhKsHj0py2Nsp2p4A5Uv8Rz2HpW9maTNfDTEUNKVyo5yKL2dAzpg3IUpST1UhAoVlip7GqaHs/rAwLabKXVuJYCRjYkfER9axd9khlcNh10IdxuxwVAduKkKB4MakuTuyDb5DoPdTf70Y2b7L+oJav8AOy4sJOPqf0HeljlViNrgXN3qQVBuCraC4iMhJAzvKsK/KvV6onOuBzayFp4CnP4ih9M8D9Kslc/snWp20rbZvbpuAGW3SjDR/pKew9xUNT/CqVp+4OWvUMdyC6FYbeW2pTSvfcO3vXy5KNOtgXL5B5F5lym1LuN1Uj+XDYAHuSkZriZlmUsLfdelqHyhKdqT+vNEydJvNkxVBuW0DgOtIUpJHbtXObom6W5lUmNafJQBkuJazx70QXJ+5hsW0d6jdEdceVlcMJTxtLg2tp/Lqadri6sR2/vxRgpwzhW0qUfRI/DjP50ytRZyZCDKeKjuCAFj4RkinNi0NSJa5Fxm+S1FWAVIaKgoA9Ek8DpRAwMXKkewm0HdVWXV9p1PBWlt6y3Nh10IGANi0kqHOSCncD6819LH3kh5YaIKNx2nPbt+1fNnQdtj3jWf3JiK5HYuuyMkEhRPmKCQoZ6nmvpKI33ZKIqVBQYQlrd03bQBn9qZo9MQzPrUqp9ubTyWLtp7VbDGFzrc7AfX2WthwKQD77Hf0FU5kpDjinUcJKugHKSa+jP2udNi/eCFxuiWtz+nZLNwRjs0pQad/wCKwf8ATVCLPY3rxcEWuKwXFOYI2joPX96DaeDGHxh8iAQk8HPD0aluxMj+Gw0AVqHf0q1tm0RZIMRqO1DbVsAAJGOlAGgbFb/D2xmXd3UMFw5UpXsOleXT7S2jbRwluS8gdFJRzj15qXYWtbqegpKYyAH2S+i2MRxsRtQD1CRXRMZKSdpOMY5qBE/a70co4XaboB03BKP7Zoz0T446a1s66zbBJaW0gKUHUAAj2NCNZX2GXIRzoGSK4ytefhwKbJ9jh3NPkT4qHkH8K05BpQbuVgKbHB5HI5pPIvojNLW+kEJrJAjA39Rsa8OtOtKIZgJbOclOSf2panTVmbZU192ZI6Yx/wCKijX/ANouLpmaq2Wm2uzXhkFRXtCFfQDmo5keP/ipcvhg2UMNqHKm2lb8euTW1q33AWZfA67MnC6eEmk7hLVKRDbaUvO4JSME+uOlR/rfwdnwyX7OlJgMjznUBOeB1OPXFNOkbt4kahlNyBMmtuBWfMdTtCMdMdM/TpViNPC7O2RUfUCmHJXlqStxpG0KTjgkdj60dAaz7FLW+YdiQV4CwGr94xaQtjcJAjtSlzXVFW5W1htboH+5CavYppxZ37k5PXJ71UP7J9kckeMk2clIxbrXMWR0+daWwR+pFXBJQnhXX6VYxztdzzWX0/Gcbvp+36vsVy0rdGyuHeYjsF8Y5CHElO4e4JBHuK+f/grYJFj8U5VjubJTKhRpcV9BGCHGl7F8djkVbDxh8QHtM3jSunWhMCb2p5RdjPFBbWk4SVY5I+nTrUG6WtLn/vXfL4/OcmrkwnJhkLIKnFvKTuUSOpyDzSWXcCxQSt+PwrFRbj4YTas0xGvJCH1/5WO2UpSTxk9T9ahy66S0DGcfSm2OXB5g/wAXBAYZ91OLISj9z7VPV7Q6/DcQ1yonJ9qjlnQzb19YuGqGUXG2xVKW1bAjawhechwj8a/UqBHPHSpwYAyz8OxvW5BM97Qj7xZtkOx71L8vy/MfcO4nCQVpQEgn2oh0ZKj6cuQkGxGPty24qO6VoI7jnv7H0o0T4J6Kj68RqeFMnGA3ITKTbvuuMrCtwSV5xt3e2cce9G9w0r/jF/ev7jQiKkpKXGG2wlDoP847/Xr712x110Z9RQ7Nt11CXSykXCA28y6SlXKSr0r3U0FESE9PU4VFoFShz2pTpq3ptUNEVtR2oAxml94htT4j0VzO1xJzzQfe4151Kt33Tl91Bem2mIy2nJysstRUDzVpP4lH8I9+1C0LVMa23IWRjTMtySiV92UDPcD6iFYBxjb196s2zps2+YmZAJZlpSEpX6pHb6U1nSMFrUw1e/o23Lu6VBwSAtRQXP8A7PLzt3e+KJW48aBuqdu6oz6WuL0C6otrj0qDO+ZVsuyAFrR/Oy6OFjj1P5VNlqeRJaCykZKQFEdPegN+yC9yUz74hMqVuSpKinb5eOgTjpj60YWRtTCNiM4xjGa1yBOhBPWdbb2A3hNFuel7tqx1uW7BcalFmS81w6phKisJCuyc4Vx1wAeKsX4Waof1zouHfnAtLqluMuhRBJUhZAOfcYP51CqWY0bWcxCpHlokBLxZHRalI2kqP5nipe8G7Q/ZtGiO8sNJcmPuNBR5Le7aD/xNUMW1uevrUm5uPSKOR93B3xesKJFz0rqdaQW7Y5IbcJHykp3J/U5qIdKPWVOu7im17Ww/D+XPGUryrb6DnOPrVmtSwEXPTtwt62tygyp1oYz8aPiGPrgj86q1Osb2kb9H1cwttdtUvynAkELbQvjJ9QMig5tZW3f7jP4q9bsX429WSAraM5Iwr96TOxW1Z+IDt1rZxxKgSlXBHGKThS8DcoGkGWU6mBm4YaQRtbQffFbBHxfEBWNnOMqxXrygB8HzE4H1oRh4pYXlQA7ccUoWN+VK5yO5pG2QwRuWT6mlCZLC9gS5zyFcfpRV8gD7Ebw3KxgAjnFc8HqeaUPsFK/MSo8dq4rUcY61hvZoeTQLwQk/SnKE75SgOOcD6018glWTilMZSwpI5yMd6JWNGCv1x1G+7xXZ2pXZEVgrTFQlt1YIATxnB59KsHaY7LNmtzCFHa3DZA/2gn9yagy0oDsme0UFZflKHHO45wlIx36frU+hDkdppgjaW2kIKcZwQACKrYI7Jnnvy1m0RZuggOJLm0p757j0qvvipp+TZDNt81ZREkpX90ePyLQen+ocAjrx9KsCkA9a93qKfLKQpKSFAKSDyOhGe9NZFAvA/cn4eYcRiQNgyr9pnyXIEZMppbTimklaFp2nKeDwefQ/nTkX1NlIUeD1wKf/ABUtKImtpkgA/wCeQi4tqzk7lfC4P9yT+tCUZ0sSSw/8ZCSskn5cniolicGKmenxrxaocfcdUqKeMp/OtJrb7rRSysNugHYrGRurtH8t5HnAjAGdwPTimlzUDRlmIwlbqx/KM4pVh31H1s3I9vFu1jDvx1BN1XNYQjBbhR5BUws4xtUgp6HOfWsVq7UgCg0y9FWtJBeUOG/UjjGfTNPd8sku4TGpc2azGS05u2nJJGeuAa7O2uA/DSy/c2FBO4AoGdwPbHbFdLNNhN96meH9s1BGS6/ctUu3Nh9W9KXllSkjsMn9aNkNK5wM89c0G6etCrMlKbbdw6hCdoacGc/rRTabwt+QmNJZAWcjI6V0d9mYc8RoTutCmlHgnnHWtGJyFSDtVlIwTxXW4nLpQlR+PPTr0pFb7eloJf3lZWtJ244OSE4x9KOg71EbnIGzJq0PpSyWu1wb21bUm5SmRJcdcWVbVr5JSnO1PB6gZonyDzuFe+WWlBtpCUoQNgAGAAOgH6Vvs7naM9s16JECDQnjLbGsYsxnFKieSkADvmttyAoc5I96rxN+0bqJwbYbFtYVjPwMFZ/5E/2oOv8A49+IbyFGLqiSwopPEdKGx+gTQjkL9Qy47mTp44WxaLBB1gywSbO95UpYz8MZ0gZPsF457bqhyZIUHHJhB2LSCAnnGP7jBqI5Xi74lXi9xrVetZ3x62zZDceU05LWW1IUoDBT0PJBqT9NKdfYXa7oVIkQyplaVHqOmc9wcZzUvLIZuQlz8cCicWhFBk//AB7uOnJHHbFB9zs2qXFiZY7qiIg53pLO8nPfOQRRsmEGmShs/Djj39zSdClNNFISSrJB4qaxIMs1tqR25py5Sk/xtWOoe43fwUjn881iNH8qEjWcgHuEpbCT+1EuoYEpyKt1hjzFAZ2gc5+tRxFtV4fvy4C4y0bFDdknHPI/atLZKItCjUJoek4SnQw1e7m8+Tw4iRtx+goxs1gVYg2tE6Q7uIJ85zec/Wk1is8m2Efwggj260RtNvPrRuB2dOnStb5RW+3l5Oc58KeBK9vBBKhxT1oyK1etQ222JQVspcS88pPIDaPiOfQZAH500zw8Ggy2ppKufnTkYxXll15c9BTjIisxHDcGgFh1nqhJ4wc5HPPvTWOAbBuRc12FZ1LHqUngqWD5hOAB3z1r3J/FtBPbFRJbfG9cgD79YY+4dSw+pP7EH+9ELXi7Y1IG62zUnuApKv3q7zWeW+NhKsRNPIcPCQSeSrJJpxTpwNtFflDHovgivXL65aiuJc9kB5s4caKDuT9c449xTbJ1HLvDa27R9+knIG5KUobBPqojGT2Gc1P6lcAwK1fb2bfLEkFKVJIc+EdCCDxUqXhh3zW7tEeU24tsKygfNkA80L3Lwzuci3OXHUl3aiNISTsTuWpI9zwD+VGkQMy7XFQslSUspAPTICRSWSdASjgrsmJrTrZLbn3WcpCFjrk4B9+aM4r8Se0mRHUkhacjHeoe1bYFvtqLPDg+VaetB1q19q7Rb5Ykx3JUEnICVDcE9KV48hKDHhLKyX4cZkqWjoOcjqaBn9Q2du/BYQUurKVLynGeoBJ/IVGV68do6o5U0XEOgZCVpwAfeo3meJMqZdhKedWGhg8nB/KtJUTONkqkuVEnRpLY/iJwrGCe1KJc+Db4xfVISMnG4nFVjs/jC8QywHAEgEAbjyKKbdeLxrN0JkpW3EbI5ORux2H/AHXOBU9z4OrjqSszckXV9TTRKms9+4+tdr/Z7Pd5VsZk3h6C+uO42wEtBSV4KSc5IORx07GmvSsMpGPlSjtnPFc9SOKnas01Fj7iYz8hxWD0b8kjP64/ajUt/MRfJrBQ7nW5afuWnS25IWzIjPq2tSWiQlRHUKHVJx2P5V59/SkDPxEgZKl45/6qQGbXFvtndsE9aktSk/C4jG5pxI4WPcenfJoQd8NpEBwxlX4/D0/gJH7ZquGnn3WPtzslqvjTbV3gMydnyLUgbkfQ+nt0ocbsJsNzAkvJkqA3R1BO1LTZ7JQOAfU9T+1ZWUFwPYas/UG/HjUcix6AlvRmkqdWkIST0BUQMn9a7acdcbtMJDyt6hGa3EdzsTmsrKn5XgljBHsU3eOy60pwpx2wO/Sgu46bjyXQ+jZuJPzDt6VlZSikyiRuCF30FGlhx0pjtL5BKEnnmhFGh46ZBblKbeOeDgjA/wDNZWUwGIiropPkKtL+G9nce+8OJHw9AKli0W2NCYS20gBKAEJB5x71lZWHJMIqhfIVxnlQooKAACD0HtTfZEffZ0m7ycEpBZbGOUgHcr9Tj9KysomN/kEBlnVR1DK3S3Yzg8tWMcjHsP8AqihbkKcRJmMrU6oDJScD9qysqwJ51j3P/9k=");
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
+      }
+
+      .tag-line {
+        font-family: "Space Mono", monospace;
+        font-size: 11px;
+        letter-spacing: 0.14em;
+        color: var(--text3);
+        text-transform: uppercase;
+        margin-bottom: 0.5rem;
+      }
+
+      .name {
+        font-size: 38px;
+        font-weight: 800;
+        letter-spacing: -0.03em;
+        line-height: 1;
+        margin-bottom: 0.4rem;
+      }
+
+      .role {
+        font-family: "Space Mono", monospace;
+        font-size: 13px;
+        color: var(--text2);
+        margin-bottom: 1.5rem;
+      }
+
+      .contacts {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+      }
+
+      .pill {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        font-family: "Space Mono", monospace;
+        font-size: 11.5px;
+        padding: 5px 12px;
+        border-radius: 999px;
+        border: 0.5px solid var(--border2);
+        color: var(--text2);
+        background: var(--bg2);
+        text-decoration: none;
+        transition:
+          border-color 0.2s,
+          color 0.2s;
+      }
+      .pill:hover {
+        border-color: var(--text);
+        color: var(--text);
+      }
+      .pill svg {
+        width: 13px;
+        height: 13px;
+        flex-shrink: 0;
+      }
+
+      /* GRID */
+      .grid-2 {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 1.25rem;
+        margin-bottom: 1.25rem;
+      }
+      .grid-2 .full {
+        grid-column: 1 / -1;
+      }
+
+      /* CARD */
+      .card {
+        background: var(--bg);
+        border: 0.5px solid var(--border);
+        border-radius: var(--radius);
+        padding: 1.5rem 1.5rem 1.25rem;
+      }
+
+      .section-label {
+        font-family: "Space Mono", monospace;
+        font-size: 10px;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+        color: var(--text3);
+        margin-bottom: 1rem;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+      .section-label::after {
+        content: "";
+        flex: 1;
+        height: 0.5px;
+        background: var(--border);
+      }
+
+      /* ABOUT */
+      .about-text {
+        font-size: 13.5px;
+        line-height: 1.8;
+        color: var(--text2);
+      }
+
+      /* SKILLS */
+      .skill-grid {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 7px;
+      }
+
+      .skill-tag {
+        font-family: "Space Mono", monospace;
+        font-size: 11px;
+        padding: 5px 11px;
+        border-radius: var(--radius-sm);
+        border: 0.5px solid var(--border2);
+        color: var(--text);
+        background: var(--bg);
+      }
+
+      .skill-tag.core {
+        background: var(--text);
+        color: var(--bg);
+        border-color: var(--text);
+        font-weight: 700;
+      }
+
+      /* HIGHLIGHT LIST */
+      .highlight-list {
+        display: flex;
+        flex-direction: column;
+      }
+
+      .hl-row {
+        display: flex;
+        align-items: flex-start;
+        gap: 10px;
+        font-size: 12.5px;
+        color: var(--text2);
+        line-height: 1.55;
+        padding: 8px 0;
+        border-bottom: 0.5px solid var(--border3);
+      }
+      .hl-row:last-child {
+        border-bottom: none;
+        padding-bottom: 0;
+      }
+      .hl-icon {
+        width: 16px;
+        height: 16px;
+        flex-shrink: 0;
+        margin-top: 1px;
+        opacity: 0.45;
+      }
+
+      /* WEEKS */
+      .week-list {
+        display: flex;
+        flex-direction: column;
+        gap: 14px;
+      }
+
+      .week-row {
+        display: flex;
+        align-items: flex-start;
+        gap: 12px;
+      }
+
+      .week-dot {
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        border: 1.5px solid var(--border2);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-family: "Space Mono", monospace;
+        font-size: 9px;
+        font-weight: 700;
+        flex-shrink: 0;
+        color: var(--text2);
+        background: var(--bg);
+        margin-top: 1px;
+      }
+
+      .week-dot.perfect {
+        background: var(--text);
+        color: var(--bg);
+        border-color: var(--text);
+      }
+
+      .week-title {
+        font-size: 13px;
+        font-weight: 700;
+        margin-bottom: 3px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+
+      .score-badge {
+        font-family: "Space Mono", monospace;
+        font-size: 10px;
+        padding: 2px 7px;
+        border-radius: 4px;
+        border: 0.5px solid var(--border2);
+        color: var(--text3);
+        font-weight: 400;
+      }
+
+      .score-badge.top {
+        border-color: var(--text);
+        color: var(--text);
+        font-weight: 700;
+      }
+
+      .week-desc {
+        font-size: 12px;
+        color: var(--text2);
+        line-height: 1.5;
+      }
+
+      /* PROJECTS */
+      .project-list {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+      }
+
+      .project-row {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 12px 14px;
+        border: 0.5px solid var(--border);
+        border-radius: var(--radius-sm);
+        cursor: pointer;
+        transition:
+          border-color 0.2s,
+          transform 0.15s;
+        text-decoration: none;
+        color: inherit;
+      }
+      .project-row:hover {
+        border-color: var(--text);
+        transform: translateY(-1px);
+      }
+
+      .project-icon {
+        width: 36px;
+        height: 36px;
+        border-radius: 9px;
+        background: var(--bg2);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+      }
+      .project-icon svg {
+        width: 18px;
+        height: 18px;
+        opacity: 0.55;
+      }
+
+      .project-name {
+        font-size: 13px;
+        font-weight: 700;
+        margin-bottom: 2px;
+      }
+      .project-desc {
+        font-size: 11.5px;
+        color: var(--text2);
+      }
+
+      .project-tags {
+        display: flex;
+        gap: 5px;
+        flex-wrap: wrap;
+        margin-top: 5px;
+      }
+
+      .mini-tag {
+        font-family: "Space Mono", monospace;
+        font-size: 10px;
+        padding: 2px 7px;
+        border-radius: 4px;
+        border: 0.5px solid var(--border);
+        color: var(--text3);
+      }
+
+      .arrow-icon {
+        margin-left: auto;
+        flex-shrink: 0;
+        opacity: 0.3;
+        width: 16px;
+        height: 16px;
+      }
+
+      /* PROJECT SUB-SECTIONS */
+      .sub-block {
+        margin-bottom: 1rem;
+      }
+      .sub-block:last-of-type {
+        margin-bottom: 0;
+      }
+      .sub-heading {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-family: "Space Mono", monospace;
+        font-size: 10.5px;
+        font-weight: 700;
+        letter-spacing: 0.04em;
+        color: var(--text);
+        margin-bottom: 6px;
+      }
+      .sub-num {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 16px;
+        height: 16px;
+        border-radius: 4px;
+        background: var(--text);
+        color: var(--bg);
+        font-size: 9px;
+        flex-shrink: 0;
+      }
+      .sub-list {
+        list-style: none;
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+      }
+      .sub-list li {
+        font-size: 12.5px;
+        color: var(--text2);
+        line-height: 1.55;
+        padding-left: 14px;
+        position: relative;
+      }
+      .sub-list li::before {
+        content: "–";
+        position: absolute;
+        left: 0;
+        color: var(--text3);
+      }
+
+      /* FOOTER */
+      .footer-note {
+        text-align: center;
+        font-family: "Space Mono", monospace;
+        font-size: 10px;
+        color: var(--text3);
+        letter-spacing: 0.08em;
+        padding-top: 0.5rem;
+      }
+
+      @media (max-width: 760px) {
+        .header {
+          flex-direction: column-reverse;
+          align-items: center;
+          text-align: center;
+          gap: 1.25rem;
+        }
+        .header-photo {
+          width: 140px;
+          height: 184px;
+        }
+        .contacts {
+          justify-content: center;
+        }
+      }
+
+      @media (max-width: 600px) {
+        body {
+          padding: 1rem 0.75rem;
+        }
+        .header {
+          padding: 1.75rem 1.5rem 1.5rem;
+        }
+        .name {
+          font-size: 30px;
+        }
+        .header-photo {
+          width: 120px;
+          height: 158px;
+        }
+        .grid-2 {
+          grid-template-columns: 1fr;
+        }
+        .grid-2 .full {
+          grid-column: 1;
+        }
+        .skill-grid {
+          gap: 6px;
+        }
+        .contacts {
+          gap: 6px;
+        }
+      }
+
+      @media (max-width: 400px) {
+        .name {
+          font-size: 26px;
+        }
+        .header-photo {
+          width: 100px;
+          height: 132px;
+        }
+      }
+
+      @media print {
+        body {
+          background: white;
+          padding: 0;
+        }
+        .page {
+          max-width: 100%;
+        }
+        .project-row {
+          break-inside: avoid;
+        }
+        .card {
+          break-inside: avoid;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="page">
+      <!-- HEADER -->
+      <div class="header">
+        <div class="header-text">
+        <p class="tag-line">frontend developer</p>
+        <p class="tag-line">22 года // 2004</p>
+        <p class="tag-line">Опыт 1 год</p>
+        <a href="tel:+79283504329" class="tag-line">+7 928 350-43-29</a>
+        <h1 class="name">Келасиди Динос Георгиевич</h1>
+        <p class="role">
+          // HTML&nbsp;·&nbsp;CSS&nbsp;·&nbsp;SCSS&nbsp;·&nbsp;JS&nbsp;·&nbsp;TypeScript
+          // React&nbsp;·&nbsp;Vue&nbsp;·&nbsp;Pixel Perfect&nbsp;·&nbsp;BEM
+        </p>
+        <div class="contacts">
+          <a
+            href="https://github.com/DinosKelasidi"
+            class="pill"
+            target="_blank"
+          >
+            <svg viewBox="0 0 24 24" fill="currentColor">
+              <path
+                d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"
+              />
+            </svg>
+            github.com/dinos
+          </a>
+          <a href="mailto:boss.dinos@mail.ru" class="pill">
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <rect x="2" y="4" width="20" height="16" rx="2" />
+              <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" />
+            </svg>
+            boss.dinos@mail.ru
+          </a>
+          <a
+            href="https://web.telegram.org/a/#1081569697"
+            class="pill"
+            target="_blank"
+          >
+            <svg viewBox="0 0 24 24" fill="currentColor">
+              <path
+                d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.562 8.248-1.97 9.289c-.145.658-.537.818-1.084.508l-3-2.21-1.447 1.394c-.16.16-.295.295-.605.295l.213-3.053 5.56-5.023c.242-.213-.054-.333-.373-.12l-6.871 4.326-2.962-.924c-.643-.204-.657-.643.136-.953l11.57-4.461c.537-.194 1.006.131.833.932z"
+              />
+            </svg>
+            @dinos
+          </a>
+        </div>
+        </div>
+        <div class="header-photo" aria-hidden="true"></div>
+      </div>
+
+      <!-- ROW 1: ABOUT (full width) -->
+      <div class="grid-2">
+        <div class="card full">
+          <p class="section-label">сопроводительное письмо</p>
+          <p class="about-text">
+            Frontend-разработчик, более года коммерческого опыта. Занимаюсь
+            версткой и разработкой интерфейсов: от простых лендингов до
+            адаптивных многостраничных сайтов под все устройства и
+            breakpoints, с подходом mobile-first. Разрабатываю при помощи
+            таких технологий как HTML5, CSS3, SCSS, JS, TypeScript на базе
+            таких библиотек и фреймворков как React и Vue. Собираю интерфейсы
+            из переиспользуемых компонентов, слежу за типизацией и чистотой
+            кода, использую BEM-методологию для предсказуемой структуры
+            стилей. Плотно работаю с макетами в Figma, реализую сложные
+            интерактивные состояния и фичи — burger-menu, многошаговый
+            Stepper, адаптивные Grid- и Flex-раскладки — и слежу за тем,
+            чтобы интерфейс не «ломался» ни на одном из брейкпоинтов. На
+            проектах настраивал ESLint / Prettier для единого стиля кода в
+            команде.
+          </p>
+        </div>
+
+        <!-- SKILLS -->
+        <div class="card">
+          <p class="section-label">стек</p>
+          <div class="skill-grid">
+            <span class="skill-tag core">HTML5</span>
+            <span class="skill-tag core">CSS3</span>
+            <span class="skill-tag core">SCSS</span>
+            <span class="skill-tag core">JS</span>
+            <span class="skill-tag core">TypeScript</span>
+            <span class="skill-tag core">React</span>
+            <span class="skill-tag core">Vue</span>
+            <span class="skill-tag core">BEM</span>
+            <span class="skill-tag">Figma</span>
+            <span class="skill-tag">Pixel Perfect</span>
+            <span class="skill-tag">Flexbox</span>
+            <span class="skill-tag">CSS Grid</span>
+            <span class="skill-tag">Responsive, Liquid, Fixed</span>
+            <span class="skill-tag">Desktop-first</span>
+            <span class="skill-tag">Mobile-first</span>
+            <span class="skill-tag">ESLint</span>
+            <span class="skill-tag">Prettier</span>
+            <span class="skill-tag">Git</span>
+          </div>
+        </div>
+
+        <!-- WHAT I DO -->
+        <div class="card">
+          <p class="section-label">что умею</p>
+          <div class="highlight-list">
+            <div class="hl-row">
+              <svg
+                class="hl-icon"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+              >
+                <path d="M12 2L2 7l10 5 10-5-10-5z" />
+                <path d="M2 17l10 5 10-5" />
+                <path d="M2 12l10 5 10-5" />
+              </svg>
+              SCSS-архитектура: переменные, миксины, компоненты
+            </div>
+            <div class="hl-row">
+              <svg
+                class="hl-icon"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+              >
+                <path d="M15 15l6 6m-11-4a7 7 0 110-14 7 7 0 010 14z" />
+              </svg>
+              Hover / focus состояния, интерактивность (аккордеон, слайдер)
+            </div>
+            <div class="hl-row">
+              <svg
+                class="hl-icon"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+              >
+                <path
+                  d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"
+                />
+                <polyline points="14 2 14 8 20 8" />
+              </svg>
+              Чистый код: ESLint + Prettier, BEM-нейминг
+            </div>
+            <div class="hl-row">
+              <svg
+                class="hl-icon"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+              >
+                <polyline points="16 18 22 12 16 6" />
+                <polyline points="8 6 2 12 8 18" />
+                <line x1="12" y1="2" x2="12" y2="22" stroke-opacity="0" />
+              </svg>
+              React / Vue: переиспользуемые компоненты, строгая типизация на TypeScript
+            </div>
+          </div>
+        </div>
+
+        <!-- FEATURED PROJECT -->
+        <div class="card full">
+          <p class="section-label">проект — react landing</p>
+          <p class="about-text" style="margin-bottom: 1.1rem">
+            Лендинг для SaaS-продукта на React — многостраничный сайт с
+            посадочной страницей, страницей тарифов, блогом и формой заявки.
+          </p>
+
+          <div class="sub-block">
+            <p class="sub-heading">
+              <span class="sub-num">1</span>UI-KIT
+            </p>
+            <ul class="sub-list">
+              <li>Реализовал переиспользуемый UI-kit: Button, Input, Card, Modal, Badge</li>
+              <li>Единый API пропсов для всех компонентов</li>
+              <li>Проработал состояния: default / hover / focus / disabled</li>
+              <li>Строгая типизация через TypeScript</li>
+            </ul>
+          </div>
+
+          <div class="sub-block">
+            <p class="sub-heading">
+              <span class="sub-num">2</span>LAYOUT-КОМПОНЕНТЫ
+            </p>
+            <ul class="sub-list">
+              <li>На основе UI-компонентов собрал переиспользуемые layout-блоки: Header, Sidebar, Footer, Section</li>
+              <li>Используются на всех страницах без дублирования разметки и стилей</li>
+            </ul>
+          </div>
+
+          <div class="sub-block">
+            <p class="sub-heading">
+              <span class="sub-num">3</span>НАВИГАЦИЯ
+            </p>
+            <ul class="sub-list">
+              <li>Навигация между страницами реализована на React Router</li>
+            </ul>
+          </div>
+
+          <div class="sub-block">
+            <p class="sub-heading">
+              <span class="sub-num">4</span>ОПТИМИЗАЦИЯ ЗАГРУЗКИ
+            </p>
+            <ul class="sub-list">
+              <li>Страницы подключены через React.lazy и Suspense</li>
+              <li>Код каждой страницы подгружается отдельным чанком только при переходе на неё</li>
+              <li>Это уменьшило вес начального бандла и ускорило первую отрисовку</li>
+            </ul>
+          </div>
+
+          <div class="sub-block">
+            <p class="sub-heading">
+              <span class="sub-num">5</span>ВЁРСТКА И СТИЛИ
+            </p>
+            <ul class="sub-list">
+              <li>Адаптивная, mobile-first</li>
+              <li>На Flexbox / CSS Grid</li>
+              <li>Стили компонентов организованы по BEM</li>
+            </ul>
+          </div>
+
+          <div class="project-tags" style="margin-top: 4px">
+            <span class="mini-tag">React</span>
+            <span class="mini-tag">TypeScript</span>
+            <span class="mini-tag">React Router</span>
+            <span class="mini-tag">React.lazy / Suspense</span>
+            <span class="mini-tag">UI Kit</span>
+            <span class="mini-tag">SCSS / BEM</span>
+          </div>
+        </div>
+
+        <!-- PROJECTS -->
+        <div class="card full">
+          <p class="section-label">проекты внутри github</p>
+          <div class="project-list">
+            <a
+              href="https://github.com/DinosKelasidi/project-pixel-perfect"
+              class="project-row"
+            >
+              <div class="project-icon">
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                >
+                  <rect x="3" y="3" width="18" height="18" rx="2" />
+                  <path d="M3 9h18M9 21V9" />
+                </svg>
+              </div>
+              <div>
+                <p class="project-name">Pixel Perfect Layout</p>
+                <p class="project-desc">
+                  Вёрстка лендинга строго по макету с отклонением менее 2px
+                </p>
+                <div class="project-tags">
+                  <span class="mini-tag">HTML5</span>
+                  <span class="mini-tag">CSS</span>
+                  <span class="mini-tag">BEM</span>
+                  <span class="mini-tag">Pixel Perfect</span>
+                </div>
+              </div>
+              <svg
+                class="arrow-icon"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+              >
+                <path d="M5 12h14M12 5l7 7-7 7" />
+              </svg>
+            </a>
+            <a
+              href="https://github.com/DinosKelasidi/project-bank-rezume"
+              class="project-row"
+            >
+              <div class="project-icon">
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                >
+                  <rect x="2" y="3" width="20" height="14" rx="2" />
+                  <path d="M8 21h8M12 17v4" />
+                </svg>
+              </div>
+              <div>
+                <p class="project-name">Project bank-resume, Adaptive Site</p>
+                <p class="project-desc">
+                  Desktop-first сайт с поддержкой 3 брейкпоинтов, адаптивный
+                  flex
+                </p>
+                <div class="project-tags">
+                  <span class="mini-tag">Responsive</span>
+                  <span class="mini-tag">Desktop-first</span>
+                  <span class="mini-tag">SCSS</span>
+                  <span class="mini-tag">Media queries</span>
+                  <span class="mini-tag">Figma</span>
+                </div>
+              </div>
+              <svg
+                class="arrow-icon"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+              >
+                <path d="M5 12h14M12 5l7 7-7 7" />
+              </svg>
+            </a>
+            <a
+              href="https://github.com/DinosKelasidi/interactive-project-site"
+              class="project-row"
+            >
+              <div class="project-icon">
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                >
+                  <path d="M13 10V3L4 14h7v7l9-11h-7z" />
+                </svg>
+              </div>
+              <div>
+                <p class="project-name">Interactive Page</p>
+                <p class="project-desc">
+                  Сайт с интерактивными компонентами на нативном JavaScript
+                </p>
+                <div class="project-tags">
+                  <span class="mini-tag">Аккордеон</span>
+                  <span class="mini-tag">Слайдер</span>
+                  <span class="mini-tag">JS</span>
+                  <span class="mini-tag">DOM API</span>
+                </div>
+              </div>
+              <svg
+                class="arrow-icon"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+              >
+                <path d="M5 12h14M12 5l7 7-7 7" />
+              </svg>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <p class="footer-note">
+        dinos · frontend developer · TypeScript / React / Vue · 2026
+      </p>
+    </div>
+  </body>
+</html>
